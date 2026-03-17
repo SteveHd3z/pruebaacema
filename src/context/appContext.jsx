@@ -6,9 +6,10 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
   const [users, setUsers] = useState([]);
+  const [logged, setLogged]= useState(false);
 
   return (
-    <AppContext.Provider value={{ users, setUsers }}>
+    <AppContext.Provider value={{ users, setUsers, logged, setLogged }}>
       {children}
     </AppContext.Provider>
   );

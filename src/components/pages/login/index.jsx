@@ -1,33 +1,41 @@
 import { useAppContext } from "../../../context/appContext";
-import { Button } from '@mui/material';
 import { useFetchUsers } from "../../../hooks/useFetchUsers";
-import { FormControl } from '@mui/material';
-import { InputLabel } from '@mui/material';
-import { Input } from '@mui/material';
 import "./Login.css";
 import Form from "../../form/form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Login(){
 
-    const { data, isLoaded, error, getPostsData} =useFetchUsers();
+    const { data, isLoaded } = useFetchUsers();
+    const { users, setUsers, logged, setLogged } = useAppContext();
+
     const [email, setEmail]=useState("");
     const [password, setPassword]=useState("");
 
+    useEffect(() => {
+        if (data && data.results) {
+            setUsers(data.results);
+        }
+    }, [data]);
 
-    function validateLogin(data, email, password){ 
-               
+    console.log(users);
 
-        const users = data.results;
+    function validateLogin(email, password){
         
-        users.forEach(user => {
-            if (user.email === email && user.password === password) {
-                console.log("User found:", user);
-                return user;
-            }else{
-                console.log("User not found");
-            }
-        });
+        if (!users || users.length === 0) {
+            alert("Datos no cargados, intenta de nuevo");
+            return;
+        }
+
+        const user = users.find(u => u.user.email === email && u.user.password === password);
+
+        if (user){
+            alert("Login exitoso: " + user.user.name.first);
+            setLogged(true);
+            
+        } else {
+            alert("Email o contraseña incorrectos");
+        }        
         
     }
 
@@ -40,11 +48,9 @@ function Login(){
         setEmail(email);
         const password = event.target.password.value;
         setPassword(password);        
-        validateLogin(data, email, password);        
+        validateLogin(email, password);        
 
     }
-
-    
 
     
     return <div className="form">        
@@ -54,4 +60,5 @@ function Login(){
         </div>
 
     }
+
 export default Login;
