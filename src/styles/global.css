@@ -1,0 +1,20 @@
+
+:root{
+
+/* colores principales */
+
+--primary-dark: #0F2A4A;
+--primary: #1E4E8C;
+--primary-light: #2F6CB3;
+
+/* acento */
+
+--accent: #F58A1F;
+
+/* neutros */
+
+--gray-light: #F5F5F5;
+--gray: #6B7280;
+--white: #FFFFFF;
+
+}
