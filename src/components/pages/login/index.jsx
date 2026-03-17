@@ -3,11 +3,13 @@ import { useFetchUsers } from "../../../hooks/useFetchUsers";
 import "./Login.css";
 import Form from "../../form/form";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(){
 
     const { data, isLoaded } = useFetchUsers();
     const { users, setUsers, logged, setLogged } = useAppContext();
+    const navigate = useNavigate();
 
     const [email, setEmail]=useState("");
     const [password, setPassword]=useState("");
@@ -30,9 +32,8 @@ function Login(){
         const user = users.find(u => u.user.email === email && u.user.password === password);
 
         if (user){
-            alert("Login exitoso: " + user.user.name.first);
             setLogged(true);
-            
+            navigate("/home");
         } else {
             alert("Email o contraseña incorrectos");
         }        

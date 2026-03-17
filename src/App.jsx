@@ -1,7 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layout";
 import Login from "./components/pages/login";
 import Home from "./components/pages/home";
+import { useAppContext } from "./context/appContext";
+
+function PrivateRoute({ children }) {
+  const { logged } = useAppContext();
+  return logged ? children : <Navigate to="/" />;
+}
 
 function App() {
   return (
@@ -9,7 +15,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>
