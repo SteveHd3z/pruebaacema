@@ -1,9 +1,9 @@
-
+import "./Button.css";
 
 
 function Button({variant, label, onClick}){   
 
-    return <button className={variant} onClick={onClick}>{label}</button>;
+    return <button className={`button ${variant}`} onClick={onClick}>{label}</button>;
 
 }
 
